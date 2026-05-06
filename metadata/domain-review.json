@@ -1,0 +1,73 @@
+{
+  "repo": "notion-svc-queue-mesh",
+  "language": "Kotlin",
+  "category": "Backend services",
+  "goal": "Design a Kotlin verification harness for queue systems, covering format conversion, round-trip fixtures, and failure-oriented tests.",
+  "review_model": {
+    "terms": [
+      "queue pressure",
+      "retry load",
+      "worker slack",
+      "session drift"
+    ],
+    "lanes": [
+      "ship",
+      "watch",
+      "hold"
+    ],
+    "score": "signal * 2 + slack + confidence - drag * 3",
+    "purpose": "surface the domain-specific cases that need the most careful review"
+  },
+  "cases": [
+    {
+      "name": "baseline",
+      "focus": "queue pressure",
+      "signal": 55,
+      "slack": 47,
+      "drag": 21,
+      "confidence": 61,
+      "score": 155,
+      "lane": "ship"
+    },
+    {
+      "name": "stress",
+      "focus": "retry load",
+      "signal": 44,
+      "slack": 28,
+      "drag": 16,
+      "confidence": 74,
+      "score": 142,
+      "lane": "ship"
+    },
+    {
+      "name": "edge",
+      "focus": "worker slack",
+      "signal": 56,
+      "slack": 24,
+      "drag": 27,
+      "confidence": 64,
+      "score": 119,
+      "lane": "watch"
+    },
+    {
+      "name": "recovery",
+      "focus": "session drift",
+      "signal": 50,
+      "slack": 35,
+      "drag": 8,
+      "confidence": 49,
+      "score": 160,
+      "lane": "ship"
+    },
+    {
+      "name": "stale",
+      "focus": "queue pressure",
+      "signal": 77,
+      "slack": 42,
+      "drag": 11,
+      "confidence": 46,
+      "score": 209,
+      "lane": "ship"
+    }
+  ]
+}

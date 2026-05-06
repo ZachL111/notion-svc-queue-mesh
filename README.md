@@ -1,68 +1,40 @@
 # notion-svc-queue-mesh
 
-`notion-svc-queue-mesh` treats backend services as a local verification problem. The Kotlin implementation is intentionally narrow, but the fixtures and notes make the behavior explicit.
+`notion-svc-queue-mesh` is a Kotlin project in backend services. Its focus is to design a Kotlin verification harness for queue systems, covering format conversion, round-trip fixtures, and failure-oriented tests.
 
-## Notion Svc Queue Mesh Checkpoints
+## Reason For The Project
 
-Treat the compact fixture as the contract and the extended examples as a scratchpad. The code should stay boring enough that a change in behavior is obvious from the test output.
+This is intentionally local and self-contained so it can be inspected without credentials, services, or seeded history.
 
-## Useful Pieces
+## Notion Svc Queue Mesh Review Notes
 
-- Includes extended examples for queue pressure, including `surge` and `degraded`.
-- Documents bounded workers tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
-- Stores project constants and verification metadata in `metadata/project.json`.
-- Adds a repository audit script that checks structure before running the language verifier.
+For a quick review, compare `queue pressure` with `worker slack` before reading the middle cases.
 
-## What This Is For
+## What It Does
 
-I use this kind of project to make a rule visible before adding more machinery around it. The important part here is not the size of the codebase. It is that the input signals, scoring rule, fixture data, and expected output can all be checked in one sitting.
+- `fixtures/domain_review.csv` adds cases for queue pressure and retry load.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/notion-svc-queue-walkthrough.md` walks through the case spread.
+- The Kotlin code includes a review path for `queue pressure` and `worker slack`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## Project Layout
+## How It Is Put Together
 
-- `src`: primary implementation
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
+The implementation keeps the scoring rule plain: reward signal and confidence, preserve slack, penalize drag, then classify the result into a review lane.
 
-## Architecture Notes
+The Kotlin addition stays small enough to inspect in one sitting.
 
-The project is organized around a compact model rather than a large framework. Inputs are scored, classified, and checked against golden fixtures. The constants live in code and are mirrored in metadata so documentation drift is easy to catch. The Kotlin version keeps data classes and model logic close together for a JVM-friendly core.
-
-## Local Workflow
+## Run It
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Check It
 
-## Case Study
+That command is also the regression path. It verifies the domain cases and catches mismatches between the CSV, metadata, and code.
 
-The extended cases are not random smoke tests. `degraded` keeps pressure on the review path, while `surge` shows the model when capacity and weight are strong enough to clear the threshold.
+## Boundaries
 
-## Quality Gate
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
-
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Scope
-
-This code is local-first. It makes no claim about deployed usage and avoids credentials, hosted state, and environment-specific setup.
-
-## Expansion Ideas
-
-- Add a short report command that prints the score breakdown for a single scenario.
-- Add malformed input fixtures so the failure path is as visible as the happy path.
-- Split the scoring constants into a typed configuration object and validate it before use.
-- Add one more backend services fixture that focuses on a malformed or borderline input.
-
-## Tooling
-
-Install Kotlin and run the commands from the repository root. The project does not need credentials or a hosted service.
+No external service is required. A deeper version would add more negative cases and a clearer boundary around invalid input.
