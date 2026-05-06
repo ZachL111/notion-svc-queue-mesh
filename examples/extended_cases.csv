@@ -1,0 +1,7 @@
+name,demand,capacity,latency,risk,weight,score,decision,reason
+baseline,63,85,14,13,7,85,review,backend services baseline scenario exercises the review path for bounded failure handling
+pressure,80,73,29,22,10,-7,review,backend services pressure scenario exercises the review path for bounded failure handling
+surge,101,99,22,13,11,155,review,backend services surge scenario exercises the review path for bounded failure handling
+degraded,72,56,32,28,6,-106,review,backend services degraded scenario exercises the review path for bounded failure handling
+recovery,87,106,17,14,11,147,review,backend services recovery scenario exercises the review path for bounded failure handling
+boundary,77,82,26,18,7,27,review,backend services boundary scenario exercises the review path for bounded failure handling
