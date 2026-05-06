@@ -1,0 +1,17 @@
+{
+  "repo": "notion-svc-queue-mesh",
+  "thresholds": {
+    "signal": 4,
+    "slack": 2,
+    "confidence": 2,
+    "drag": 4,
+    "ship": 202,
+    "watch": 124
+  },
+  "terms": [
+    "queue pressure",
+    "retry load",
+    "worker slack",
+    "session drift"
+  ]
+}
